@@ -1,9 +1,10 @@
 <?php
 
+use Livewire\Livewire;
 use MBarlow\Megaphone\Livewire\Megaphone;
 
 it('can render the megaphone component with no logged in user', function () {
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->assertViewIs('megaphone::megaphone')
         ->assertSeeHtml($this->bellSvgIcon());
 });
@@ -13,7 +14,7 @@ it('can render the megaphone component with logged in user', function () {
         $this->createTestUser()
     );
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->assertViewIs('megaphone::megaphone')
         ->assertSeeHtml($this->bellSvgIcon());
 });
@@ -28,7 +29,7 @@ it('can render the megaphone component with notification count', function () {
         \MBarlow\Megaphone\Types\General::class
     );
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->assertViewIs('megaphone::megaphone')
         ->assertSeeHtml('<sub class="absolute top-1 left-1" aria-label="unread count">
                 <span class="relative flex h-5 w-5 -mt-1">
@@ -57,7 +58,7 @@ it('can render the megaphone component with notification dot', function () {
         \MBarlow\Megaphone\Types\General::class
     );
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->assertViewIs('megaphone::megaphone')
         ->assertSeeHtml('<sub class="absolute top-2 left-2" aria-label="has unread notifications">
                 <span class="relative flex h-3 w-3 -mt-1">
@@ -83,7 +84,7 @@ it('can load announcements', function () {
     $user->unreadNotifications->first()->markAsRead();
 
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->call('loadAnnouncements', $user)
         ->assertSet('unread', $user->announcements()->get()->whereNull('read_at'))
         ->assertSet('announcements', $user->readNotifications);
@@ -104,7 +105,7 @@ it('can mark notification as read', function () {
     );
     $notification = $user->unreadNotifications->first();
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->call('markAsRead', $notification)
         ->assertSet('unread', $user->announcements()->get()->whereNull('read_at'))
         ->assertSet('announcements', $user->readNotifications);
@@ -124,7 +125,7 @@ it('can mark all notifications as read', function () {
         \MBarlow\Megaphone\Types\Important::class
     );
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->call('markAllRead')
         ->assertSet('unread', $user->announcements()->get()->whereNull('read_at'))
         ->assertSet('announcements', $user->readNotifications);
@@ -140,7 +141,7 @@ it('doesn\'t shows mark all as read if only 1 or less', function () {
         \MBarlow\Megaphone\Types\General::class
     );
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->assertViewIs('megaphone::megaphone')
         ->assertDontSeeHtml('<button class="focus:outline-none text-sm leading-normal pt-8 hover:text-red-700" wire:click="markAllRead()">Mark all as read</button');
 });
@@ -159,7 +160,7 @@ it('shows mark all as read if more than 1 notification', function () {
         \MBarlow\Megaphone\Types\Important::class
     );
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->assertViewIs('megaphone::megaphone')
         ->assertSeeHtml('<button class="focus:outline-none text-sm leading-normal pt-8 hover:text-red-700" wire:click="markAllRead()">Mark all as read</button');
 });
@@ -174,7 +175,7 @@ it('can render the megaphone component with general notification', function () {
         \MBarlow\Megaphone\Types\General::class
     );
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->assertViewIs('megaphone::megaphone')
         ->assertSeeHtml('<div tabindex="0" aria-label="group icon" role="img" class="focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex flex-shrink-0 items-center justify-center">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="w-4/5 h-4/5 fill-blue-600">
@@ -193,7 +194,7 @@ it('can render the megaphone component with important notification', function ()
         \MBarlow\Megaphone\Types\Important::class
     );
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->assertViewIs('megaphone::megaphone')
         ->assertSeeHtml('<div tabindex="0" aria-label="group icon" role="img" class="focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex flex-shrink-0 items-center justify-center">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512" class="w-4/5 h-4/5 fill-red-600">
@@ -212,7 +213,7 @@ it('can render the megaphone component with new feature notification', function 
         \MBarlow\Megaphone\Types\NewFeature::class
     );
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->assertViewIs('megaphone::megaphone')
         ->assertSeeHtml('<div tabindex="0" aria-label="group icon" role="img" class="focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex flex-shrink-0 items-center justify-center">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" class="w-4/5 h-4/5 fill-green-600">
@@ -238,7 +239,7 @@ it('can render the megaphone component with custom notification', function () {
         \MBarlow\Megaphone\Tests\Setup\Types\CustomType::class
     );
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->assertViewIs('megaphone::megaphone')
         ->assertSeeHtml('<div tabindex="0" aria-label="group icon" role="img" class="focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex flex-shrink-0 items-center justify-center">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4/5 h-4/5 fill-red-600">
@@ -259,7 +260,7 @@ it('can render the megaphone component with mark as read enabled on links', func
         \MBarlow\Megaphone\Types\General::class
     );
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->assertViewIs('megaphone::megaphone')
         ->assertSeeHtml('<a href="' . $notification->data['link'] . '" class="cursor-pointer no-underline bg-gray-100 text-gray-800 rounded-md border border-gray-300 p-2 hover:bg-gray-300" target="_self" wire:click="markAsRead(\'' . $notification->id . '\')">
     View
@@ -283,7 +284,7 @@ it('can handle custom megaphone notification types with no template set', functi
         \MBarlow\Megaphone\Tests\Setup\Types\CustomType::class
     );
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->assertViewIs('megaphone::megaphone')
         ->assertDontSeeHtml('<div tabindex="0" aria-label="group icon" role="img" class="focus:outline-none w-8 h-8 border rounded-full border-gray-200 flex flex-shrink-0 items-center justify-center">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="w-4/5 h-4/5 fill-red-600">
@@ -316,7 +317,7 @@ it('can handle invalid megaphone notification type', function () {
         []
     );
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->set('unread', $announcements->whereNull('read_at'))
         ->set('announcements', $announcements->whereNotNull('read_at'))
         ->assertViewIs('megaphone::megaphone')
@@ -346,12 +347,11 @@ it('can clear all previous notifications', function () {
         \MBarlow\Megaphone\Types\Important::class
     );
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->call('markAllRead')
         ->assertSet('unread', $user->announcements()->get()->whereNull('read_at'))
         ->assertSet('announcements', $user->readNotifications);
 
-    // check that the notification has been marked as read
     $this->assertDatabaseHas('notifications', [
         'read_at' => now(),
         'type' => \MBarlow\Megaphone\Types\General::class,
@@ -362,10 +362,9 @@ it('can clear all previous notifications', function () {
         'type' => \MBarlow\Megaphone\Types\Important::class,
     ]);
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->call('deleteAllReadNotification');
 
-    // Check that the notification has been deleted
     $this->assertDatabaseMissing('notifications', [
         'read_at' => null,
         'type' => \MBarlow\Megaphone\Types\General::class,
@@ -398,12 +397,11 @@ it('can delete single read notification', function () {
         \MBarlow\Megaphone\Types\Important::class
     );
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->call('markAllRead')
         ->assertSet('unread', $user->announcements()->get()->whereNull('read_at'))
         ->assertSet('announcements', $user->readNotifications);
 
-    // check that the notification has been marked as read
     $this->assertDatabaseHas('notifications', [
         'read_at' => now(),
         'type' => \MBarlow\Megaphone\Types\General::class,
@@ -416,10 +414,9 @@ it('can delete single read notification', function () {
 
     $notification = $user->readNotifications->first();
 
-    $this->livewire(Megaphone::class)
+    Livewire::test(Megaphone::class)
         ->call('deleteNotification', $notification);
 
-    // Check that the notification has been deleted
     $this->assertDatabaseMissing('notifications', [
         'read_at' => null,
         'type' => \MBarlow\Megaphone\Types\General::class,
