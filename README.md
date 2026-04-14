@@ -93,10 +93,10 @@ If you are not using the default user model found at `App\Models\User`, you will
 
 ## Using Megaphone
 
-To get started using megaphone, drop in the Megaphone Livewire component into your template.
+To get started using megaphone, drop in the Notifications Livewire component into your template.
 
 ```html
-<livewire:megaphone />
+<livewire:megaphone::notifications />
 ```
 
 This will render a Bell Icon where the component has been placed. When clicked a static sidebar will appear on the right of the screen which will show all the existing and any new notifications to the user.
@@ -224,7 +224,7 @@ You may want to let users know that some downtime is expected for maintenance or
 To use the component simply create a new page within your admin area, or create a password-protected page within your application that only you as the application owners can access and drop in this Livewire component.
 
 ```html 
-<livewire:megaphone-admin></livewire:megaphone-admin>
+<livewire:megaphone::admin></livewire:megaphone::admin>
 ```
 
 Visit your page and you will be presented with a form, to first select the notification type and then fill out the title, body, link and link text. Once you have filled everything out, hit send to push the notification out to all users.
@@ -290,10 +290,10 @@ As default, Megaphone assumes you will be attaching it to the standard Laravel U
 
 If you are wanting to attach Megaphone to a Team model for example, change the `model` attribute of the published megaphone config file, `megaphone.php`.
 
-When rendering the Megaphone component, you will then need to pass in the ID of the notifiable model into the component so Megaphone can load the correct notifications
+When rendering the Notifications component, you will then need to pass in the ID of the notifiable model into the component so Megaphone can load the correct notifications
 
 ```html
-<livewire:megaphone :notifiableId="$user->team->id"></livewire:megaphone>
+<livewire:megaphone::notifications :notifiableId="$user->team->id"></livewire:megaphone::notifications>
 ```
 
 
