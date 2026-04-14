@@ -19,7 +19,7 @@
     "require-dev": {
         "squizlabs/php_codesniffer": "^3.7",
         "orchestra/testbench": "^9.0|^10.0",
-        "pestphp/pest-plugin-faker": "^2.0",
+        "pestphp/pest-plugin-faker": "^3.0",
         "pestphp/pest": "^3.0"
     },
     "autoload": {
